@@ -23,6 +23,8 @@ export default function ListOfPosts() {
   
       fetchPosts();
     }, []);
+
+    
   
     const addPost = async (e) => {
       e.preventDefault();
@@ -50,6 +52,21 @@ export default function ListOfPosts() {
       }
     };
   
+    const updatePost = async (postId, updatedTitle, updatedBody) =>{
+        const res = await axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`,{
+            id: postId,
+            title: updatedTitle,
+            body: updatedBody,
+            userId: 1
+        })
+       
+        setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post.id === postId ? { ...post, title: updatedTitle, body: updatedBody } : post
+        )
+      );
+    }
+
     return (
       <div className="">
         <div className="">
@@ -83,9 +100,7 @@ export default function ListOfPosts() {
         </div>
   
         {posts.map((post) => (
-          <Link href="/posts/[id]" as={`posts/${post.id}`} key={post.id}>
-            <PostItem key={post.id} post={post}/>
-          </Link>
+            <PostItem key={post.id} post={post} updatePost={updatePost}/>
         ))}
       </div>
     );
