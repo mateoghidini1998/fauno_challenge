@@ -18,10 +18,15 @@ module.exports = {
       },
       boxShadow: {
         '3xl': '.4rem .4rem #05060f',
+        pagination: '6px 6px 0 black',
       },
       borderWidth: {
         DEFAULT: '1px',
         9: '.5vmin',
+      },
+      skew: {
+        n15: '-15deg',
+        15: '15deg',
       },
     },
   },

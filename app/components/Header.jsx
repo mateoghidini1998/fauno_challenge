@@ -13,9 +13,9 @@ const links = [
 
 export function Header() {
     return (
-        <header >
+        <header className='w-full h-16 bg-green-950 text-white font-bold' >
           <nav >
-            <ul >
+            <ul className='flex justify-center items-center' >
                 {links.map(({ label, url }) => (
                     <li key={url}>
                         <Link href={url}>{label}</Link>

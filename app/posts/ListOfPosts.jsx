@@ -1,13 +1,15 @@
 'use client'
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import axios from "axios";
 import PostItem from "./PostItem";
 
 export default function ListOfPosts() {
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [newPostTitle, setNewPostTitle] = useState('');
-    const [newPostBody, setNewPostBody] = useState('');
+    const [newPostBody, setNewPostBody] = useState('');    
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage, setPostsPerPage] = useState(5);
   
     useEffect(() => {
       const fetchPosts = async () => {
@@ -15,7 +17,9 @@ export default function ListOfPosts() {
           const response = await axios.get(
             'https://jsonplaceholder.typicode.com/posts'
           );
-          setPosts(response.data);
+          const orderedPosts = response.data.sort((a, b) => b.id - a.id);
+          setPosts(orderedPosts)
+          setLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -40,10 +44,10 @@ export default function ListOfPosts() {
         );
   
         const newPost = response.data;
+        console.log('Response from creating post:', response);
         console.log('New post created:', newPost);
   
-        setPosts((prevPosts) => [...prevPosts, newPost]);
-  
+        setPosts((prevPosts) => [newPost, ...prevPosts]);
         // Reset form inputs
         setNewPostTitle('');
         setNewPostBody('');
@@ -52,27 +56,31 @@ export default function ListOfPosts() {
       }
     };
   
-    const updatePost = async (postId, updatedTitle, updatedBody) =>{
-        const res = await axios.put(`https://jsonplaceholder.typicode.com/posts/${postId}`,{
-            id: postId,
-            title: updatedTitle,
-            body: updatedBody,
-            userId: 1
-        })
-       
-        setPosts((prevPosts) =>
+    const updatePost = (postId, updatedTitle, updatedBody) => {
+      setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post.id === postId ? { ...post, title: updatedTitle, body: updatedBody } : post
         )
       );
+    };
+
+    if(loading){
+        return <h1>Loading...</h1>
     }
 
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
-      <div className="">
-        <div className="">
-          <h2>Create New Post</h2>
-          <form onSubmit={addPost}>
-            <div>
+      <div className="flex flex-col gap-4 items-center container mx-auto">
+        <div className="flex flex-col gap-4 w-full items-center">
+          <h2 className="">New Post</h2>
+          <form onSubmit={addPost} className="flex flex-col gap-4 w-full items-center">
+            <div className="flex flex-col gap-4 w-full items-center">
               <label htmlFor="title">Title:</label>
               <input
                 name="title"
@@ -81,27 +89,45 @@ export default function ListOfPosts() {
                 value={newPostTitle}
                 onChange={(e) => setNewPostTitle(e.target.value)}
                 required
-                className="rounded text-lime-500 "
+                className="rounded bg-transparent text-black border-spacing-5 border-black-1000 border-2"
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-4 w-full items-center">
               <label htmlFor="body">Body:</label>
-              <input
+              <textarea
                 type="text"
                 id="body"
                 value={newPostBody}
                 onChange={(e) => setNewPostBody(e.target.value)}
                 required
-                className="rounded text-lime-500 border-lime-400"
+                className="rounded bg-transparent text-black border-spacing-5 border-black-1000 border-2"
               />
             </div>
-            <button type="submit">Create Post</button>
+            <button
+              className="border-4 rounded-lg text-xs border-black-1000 bg-green-950 text-black p-1  w-24 uppercase"
+              type="submit">
+              Create Post
+            </button>
           </form>
         </div>
-  
-        {posts.map((post) => (
-            <PostItem key={post.id} post={post} updatePost={updatePost}/>
-        ))}
+        <div className="flex flex-col gap-4 w-full items-center">
+          {currentPosts.map((post) => (
+            <PostItem key={post.id} post={post} updatePost={updatePost} />
+          ))}
+        </div>
+        <div className="flex justify-center mt-4">
+          {currentPage > 1 && (
+            <button onClick={() => paginate(currentPage - 1)} className="mr-2 bg-green-950 text-white px-4 py-2 rounded">
+              Prev
+            </button>
+          )}
+          {currentPage < Math.ceil(posts.length / postsPerPage) && (
+            <button onClick={() => paginate(currentPage + 1)} 
+            className="bg-green-950 text-white px-4 py-2 rounded">
+              <span>Next</span>
+            </button>
+          )}
+        </div>
       </div>
     );
   }
