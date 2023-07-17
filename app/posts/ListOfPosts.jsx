@@ -12,12 +12,15 @@ export default function ListOfPosts() {
     const [loading, setLoading] = useState(true);
     const { currentPage, perPage, paginate,  setCurrentPage } = usePagination()  
   
+
+    //Fetch all posts from API
     useEffect(() => {
       const fetchPosts = async () => {
         try {
           const response = await axios.get(
             'https://jsonplaceholder.typicode.com/posts'
           );
+          //Sort the posts by id in descending order
           const orderedPosts = response.data.sort((a, b) => b.id - a.id);
           setPosts(orderedPosts)
           setLoading(false);
@@ -30,7 +33,7 @@ export default function ListOfPosts() {
     }, []);
 
     
-  
+    //Create a post
     const addPost = async (title, body) => {
       try {
         const response = await axios.post(
@@ -43,13 +46,18 @@ export default function ListOfPosts() {
         );
   
         const newPost = response.data; 
+        //Fake the recently created post's id
+        newPost.id = posts.length + 1;
+
+        //Render the new post at the very first of the list
         setPosts((prevPosts) => [newPost, ...prevPosts]);
 
       } catch (error) {
         console.error("Error creating post:", error);
       }
     };
-  
+    
+    //Update a post
     const updatePost = (postId, updatedTitle, updatedBody) => {
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
@@ -62,6 +70,7 @@ export default function ListOfPosts() {
         return <h1>Loading...</h1>
     }
 
+    //Handle pagination
     const indexOfLastPost = currentPage * perPage;
     const indexOfFirstPost = indexOfLastPost - perPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -70,7 +79,7 @@ export default function ListOfPosts() {
     return (
       <div className="flex flex-col gap-4 items-center container mx-4 w-full">
         <div className="flex flex-col gap-4 w-auto items-center">
-          <h2 className="">New Post</h2>
+          <h2 className="text-2xl font-bold">Inspiring Stories and Personal Experiences</h2>
           <NewPost addPost={addPost} />
         </div>
         <div className="flex flex-col gap-4 w-full items-center  mx-4 lg:mx-auto">
