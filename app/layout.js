@@ -1,4 +1,5 @@
 import './globals.css';
+import { Header } from './components/UI/Header';
 
 export default function RootLayout({ children }) {
   return (
@@ -6,7 +7,10 @@ export default function RootLayout({ children }) {
       <head>
         <title>Posts App</title>
       </head>
-      <body className='bg-white '>{children}</body>
+      <body className='bg-white '>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
