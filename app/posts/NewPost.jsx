@@ -14,7 +14,7 @@ function NewPost({ addPost }) {
   };
       
   return (
-    <form onSubmit={handleSubmit} className="relative flex flex-col items-center gap-2 border-9 border-black-1000 rounded-2xl bg-green-950 m-6 w-auto h-auto p-4 overflow-hidden shadow-3xl text-black">
+    <form onSubmit={handleSubmit} className="relative flex flex-col items-center gap-2 border-9 border-black-1000 rounded-2xl bg-green-950 m-6 w-full h-auto p-4 overflow-hidden shadow-3xl text-black">
       <div className="flex flex-col gap-4 w-full items-start">
         <label className="text-white font-bold uppercase" htmlFor="title">Title:</label>
         <input
