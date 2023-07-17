@@ -53,6 +53,7 @@ export default function ListOfPosts({notify}) {
 
         //Render the new post at the very first of the list
         setPosts((prevPosts) => [newPost, ...prevPosts]);
+        //Show success notification
         notify('Post created successfully!!!');
 
       } catch (error) {
@@ -67,6 +68,7 @@ export default function ListOfPosts({notify}) {
           post.id === postId ? { ...post, title: updatedTitle, body: updatedBody } : post
         )
       );
+      //Show success notification
       notify('Post updated successfully!!!');
     };
 

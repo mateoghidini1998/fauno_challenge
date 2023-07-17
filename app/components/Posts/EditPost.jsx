@@ -6,6 +6,7 @@ function EditPost({post, updatePost, onCancelEdit, onSaveSuccess}) {
   const [updatedBody, setUpdatedBody] = useState(post.body);
 
   const handleSave = (postId) => {
+    //Confirmation message when update
     const confirmed = window.confirm('Are you sure you want to update this post?');
     if (confirmed) {
       updatePost(postId, updatedTitle, updatedBody);
