@@ -6,7 +6,7 @@ export default function PostsPage() {
 
   return (
     <>
-      <section>
+      <section className="bg-green-950">
         {/* <NewPost  /> */}
         <ListOfPosts  />
       </section>

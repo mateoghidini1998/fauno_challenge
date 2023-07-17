@@ -7,7 +7,7 @@ export default function RootLayout({ children }) {
       <head>
         <title>My first App</title>
       </head>
-      <body>
+      <body className='bg-green-950'>
         <Header />
         {children}
       </body>

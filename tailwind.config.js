@@ -28,6 +28,9 @@ module.exports = {
         n15: '-15deg',
         15: '15deg',
       },
+      minWidth: {
+        4: '400px',
+      },
     },
   },
   plugins: [],

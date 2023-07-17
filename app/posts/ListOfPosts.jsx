@@ -79,9 +79,9 @@ export default function ListOfPosts() {
       <div className="flex flex-col gap-4 items-center container mx-auto">
         <div className="flex flex-col gap-4 w-full items-center">
           <h2 className="">New Post</h2>
-          <form onSubmit={addPost} className="flex flex-col gap-4 w-full items-center">
-            <div className="flex flex-col gap-4 w-full items-center">
-              <label htmlFor="title">Title:</label>
+          <form onSubmit={addPost} className="relative flex flex-col items-center gap-2 border-9 border-black-1000 rounded-2xl bg-green-950 mt-6 w-96 h-auto p-4 overflow-hidden shadow-3xl text-black">
+            <div className="flex flex-col gap-4 w-full items-start">
+              <label className="text-white font-bold uppercase" htmlFor="title">Title:</label>
               <input
                 name="title"
                 type="text"
@@ -89,18 +89,18 @@ export default function ListOfPosts() {
                 value={newPostTitle}
                 onChange={(e) => setNewPostTitle(e.target.value)}
                 required
-                className="rounded bg-transparent text-black border-spacing-5 border-black-1000 border-2"
+                className="overflow-y-hidden rounded w-full bg-transparent text-white font-bold border-spacing-5 border-black-1000 border-2 uppercase p-2"
               />
             </div>
-            <div className="flex flex-col gap-4 w-full items-center">
-              <label htmlFor="body">Body:</label>
+            <div className="flex flex-col gap-4 w-full items-start">
+              <label className="text-white font-bold uppercase" htmlFor="body">Body:</label>
               <textarea
                 type="text"
                 id="body"
                 value={newPostBody}
                 onChange={(e) => setNewPostBody(e.target.value)}
                 required
-                className="rounded bg-transparent text-black border-spacing-5 border-black-1000 border-2"
+                className="overflow-y-hidden rounded w-full bg-transparent text-black border-spacing-5 p-2 border-black-1000 border-2"
               />
             </div>
             <button
