@@ -1,13 +1,13 @@
 import ListOfPosts from "./ListOfPosts";
-import NewPost from "./NewPost";
+import PostsHero from "./PostsHero";
 
 
 export default function PostsPage() {
 
   return (
     <>
-      <section className="bg-white w-auto flex flex-col items-center p-4">
-        {/* <NewPost  /> */}
+      <section className="bg-white w-auto flex flex-col items-center">
+        <PostsHero/>
         <ListOfPosts  />
       </section>
     </>

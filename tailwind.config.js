@@ -15,6 +15,9 @@ module.exports = {
       colors: {
         'green-950': '#00C08B',
         'black-1000': '#05060f',
+        customGreen: '#5FD7B7',
+        customTeal: '#1CA57F',
+        customDarkTeal: '#009068',
       },
       boxShadow: {
         '3xl': '.4rem .4rem #05060f',

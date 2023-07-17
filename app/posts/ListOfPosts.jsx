@@ -79,7 +79,6 @@ export default function ListOfPosts() {
     return (
       <div className="flex flex-col gap-4 items-center container mx-4 w-full">
         <div className="flex flex-col gap-4 w-auto items-center">
-          <h2 className="text-2xl font-bold">Inspiring Stories and Personal Experiences</h2>
           <NewPost addPost={addPost} />
         </div>
         <div className="flex flex-col gap-4 w-full items-center  mx-4 lg:mx-auto">
