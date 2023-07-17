@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PostItem from "./PostItem";
+import NewPost from "./NewPost";
 
 export default function ListOfPosts() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [newPostTitle, setNewPostTitle] = useState('');
-    const [newPostBody, setNewPostBody] = useState('');    
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(5);
   
@@ -30,29 +29,22 @@ export default function ListOfPosts() {
 
     
   
-    const addPost = async (e) => {
-      e.preventDefault();
-  
+    const addPost = async (title, body) => {
       try {
         const response = await axios.post(
-          'https://jsonplaceholder.typicode.com/posts',
+          "https://jsonplaceholder.typicode.com/posts",
           {
-            title: newPostTitle,
-            body: newPostBody,
+            title,
+            body,
             userId: 1,
           }
         );
   
-        const newPost = response.data;
-        console.log('Response from creating post:', response);
-        console.log('New post created:', newPost);
-  
+        const newPost = response.data; 
         setPosts((prevPosts) => [newPost, ...prevPosts]);
-        // Reset form inputs
-        setNewPostTitle('');
-        setNewPostBody('');
+
       } catch (error) {
-        console.error('Error creating post:', error);
+        console.error("Error creating post:", error);
       }
     };
   
@@ -76,41 +68,12 @@ export default function ListOfPosts() {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
-      <div className="flex flex-col gap-4 items-center container mx-auto">
-        <div className="flex flex-col gap-4 w-full items-center">
+      <div className="flex flex-col gap-4 items-center container mx-4 w-full">
+        <div className="flex flex-col gap-4 w-auto items-center">
           <h2 className="">New Post</h2>
-          <form onSubmit={addPost} className="relative flex flex-col items-center gap-2 border-9 border-black-1000 rounded-2xl bg-green-950 mt-6 w-96 h-auto p-4 overflow-hidden shadow-3xl text-black">
-            <div className="flex flex-col gap-4 w-full items-start">
-              <label className="text-white font-bold uppercase" htmlFor="title">Title:</label>
-              <input
-                name="title"
-                type="text"
-                id="title"
-                value={newPostTitle}
-                onChange={(e) => setNewPostTitle(e.target.value)}
-                required
-                className="overflow-y-hidden rounded w-full bg-transparent text-white font-bold border-spacing-5 border-black-1000 border-2 uppercase p-2"
-              />
-            </div>
-            <div className="flex flex-col gap-4 w-full items-start">
-              <label className="text-white font-bold uppercase" htmlFor="body">Body:</label>
-              <textarea
-                type="text"
-                id="body"
-                value={newPostBody}
-                onChange={(e) => setNewPostBody(e.target.value)}
-                required
-                className="overflow-y-hidden rounded w-full bg-transparent text-black border-spacing-5 p-2 border-black-1000 border-2"
-              />
-            </div>
-            <button
-              className="border-4 rounded-lg text-xs border-black-1000 bg-green-950 text-black p-1  w-24 uppercase"
-              type="submit">
-              Create Post
-            </button>
-          </form>
+          <NewPost addPost={addPost} />
         </div>
-        <div className="flex flex-col gap-4 w-full items-center">
+        <div className="flex flex-col gap-4 w-full items-center  mx-4 lg:mx-auto">
           {currentPosts.map((post) => (
             <PostItem key={post.id} post={post} updatePost={updatePost} />
           ))}
