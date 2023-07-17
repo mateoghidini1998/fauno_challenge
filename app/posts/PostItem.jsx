@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { GrEdit } from 'react-icons/gr';
+import { TbEdit } from 'react-icons/tb';
 import EditPost from './EditPost';
 
 function PostItem({ post, updatePost }) {
@@ -21,7 +21,8 @@ function PostItem({ post, updatePost }) {
     };
 
     return (
-      <article className="relative flex flex-col gap-2 border-9 border-black-1000 rounded-2xl bg-green-950 whitespace-normal lg:w-auto md:w-auto w-full max-w-md m-6 h-auto p-4  shadow-3xl text-black">
+      <article className="relative flex flex-col gap-2 border-[1.5px]  border-[#E2E8F0]  rounded-[10px] bg-white whitespace-normal lg:w-auto md:w-auto w-full max-w-md m-6 h-auto p-4 text-black shadow-[-1px_2px_4px_0px_#DDDDDD59]
+      ">
         {isEditing ? (
           <EditPost
           post={post}
@@ -31,15 +32,15 @@ function PostItem({ post, updatePost }) {
           />
         ) : (
           <div className='w-auto'>
-            <h2 className="text-xl font-bold text-white uppercase mb-4">
-              {post.id} {post.title}
+            <h2 className="text-xl font-bold text-[#282828] text-[20px] mb-4">
+              {post.id} - {post.title}
             </h2>
-            <p className="mb-10 text-gray-950 break-words ">{post.body}</p>
+            <p className="mb-10 text-[#757575] break-words ">{post.body}</p>
             <button
-              className="border-9 rounded-xl border-black-1000 bg-yellow-500 text-black p-2 shadow-2xl w-10 absolute bottom-2 right-2 m-2"
+              className="border-none rounded-[6px] bg-gray-600 flex justify-evenly items-center text-white text-[14px] font-[500] p-2 h-[37px] w-[80px] absolute bottom-2 right-2 m-2"
               onClick={() => handleEdit(post.id)}
             >
-              <GrEdit className='w-full  h-full' />
+              <TbEdit className='' /> Edit
             </button>
           </div>
         )}

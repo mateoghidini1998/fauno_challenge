@@ -6,7 +6,7 @@ export default function RootLayout({ children }) {
       <head>
         <title>Posts App</title>
       </head>
-      <body className='bg-green-950 w-auto'>{children}</body>
+      <body className='bg-white w-auto'>{children}</body>
     </html>
   );
 }

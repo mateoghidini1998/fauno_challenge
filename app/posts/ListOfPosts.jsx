@@ -87,7 +87,7 @@ export default function ListOfPosts() {
             <PostItem key={post.id} post={post} updatePost={updatePost} />
           ))}
         </div>
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center items-center mt-4">
           <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
