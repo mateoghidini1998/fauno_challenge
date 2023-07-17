@@ -1,14 +1,16 @@
 'use client'
 import { useEffect, useState } from "react";
+import usePagination from '../custom-hooks/usePagination'
 import axios from "axios";
 import PostItem from "./PostItem";
 import NewPost from "./NewPost";
+//Pagination
+import Pagination from "../components/Pagination";
 
 export default function ListOfPosts() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostsPerPage] = useState(5);
+    const { currentPage, perPage, paginate,  setCurrentPage } = usePagination()  
   
     useEffect(() => {
       const fetchPosts = async () => {
@@ -60,12 +62,10 @@ export default function ListOfPosts() {
         return <h1>Loading...</h1>
     }
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const indexOfLastPost = currentPage * perPage;
+    const indexOfFirstPost = indexOfLastPost - perPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const totalPages = Math.ceil(posts.length / perPage);
 
     return (
       <div className="flex flex-col gap-4 items-center container mx-4 w-full">
@@ -79,17 +79,12 @@ export default function ListOfPosts() {
           ))}
         </div>
         <div className="flex justify-center mt-4">
-          {currentPage > 1 && (
-            <button onClick={() => paginate(currentPage - 1)} className="mr-2 bg-green-950 text-white px-4 py-2 rounded">
-              Prev
-            </button>
-          )}
-          {currentPage < Math.ceil(posts.length / postsPerPage) && (
-            <button onClick={() => paginate(currentPage + 1)} 
-            className="bg-green-950 text-white px-4 py-2 rounded">
-              <span>Next</span>
-            </button>
-          )}
+          <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          perPage={perPage}
+          paginate={paginate}
+          />
         </div>
       </div>
     );
