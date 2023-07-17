@@ -1,7 +1,23 @@
-export default function Home() {
+'use client'
+import ListOfPosts from "./components/Posts/ListOfPosts";
+import PostsHero from "./components/Posts/PostsHero";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+export default function PostsPage() {
+
+  const notify = (message) => {
+    toast.success(message);
+  };
+
   return (
-    <main className='flex w-full min-h-screen flex-col items-center justify-between p-24'>
-      <h1 className='text-3xl font-bold'>Hola Mundo</h1>
-    </main>
+    <>
+      <section className="bg-white w-auto flex flex-col items-center">
+        <ToastContainer />
+        <PostsHero/>
+        <ListOfPosts notify={notify} />
+      </section>
+    </>
   );
 }
